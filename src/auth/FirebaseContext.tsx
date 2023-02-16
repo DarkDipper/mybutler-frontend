@@ -88,7 +88,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     try {
       onAuthStateChanged(AUTH, async (user) => {
         if (user) {
-          console.log('2');
+          // console.log('2');
           dispatch({
             type: Types.INITIAL,
             payload: {
@@ -134,7 +134,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     GITHUB_PROVIDER.addScope('repo');
     await signInWithPopup(AUTH, GITHUB_PROVIDER)
       .then((result) => {
-        console.log('1');
+        // console.log('1');
         // const accessToken = GithubAuthProvider.credentialFromResult(result);
         // console.log(accessToken?.accessToken);
       })

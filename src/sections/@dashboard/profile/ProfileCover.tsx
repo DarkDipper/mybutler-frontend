@@ -68,8 +68,8 @@ export default function ProfileCover() {
             textAlign: { xs: 'center', md: 'left' },
           }}
         >
-          <Typography variant="h4">Zennomi</Typography>
-          <Typography sx={{ opacity: 0.72 }}>loser, vozer, shitposter, huster, ITer</Typography>
+          <Typography variant="h4">Phong Huỳnh</Typography>
+          <Typography sx={{ opacity: 0.72 }}>Developer, ITer, Otaku</Typography>
         </Box>
       </InfoStyle>
       <Image

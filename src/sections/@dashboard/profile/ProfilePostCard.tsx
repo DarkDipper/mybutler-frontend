@@ -17,6 +17,7 @@ import {
 // components
 import Image from '@yourapp/src/components/image';
 import Iconify from '@yourapp/src/components/iconify';
+import Cat from '@yourapp/src/assets/images/Cat look.jpg';
 
 // ----------------------------------------------------------------------
 
@@ -29,28 +30,32 @@ export default function ProfilePostCard({ post }: Props) {
     <Card>
       <CardHeader
         disableTypography
-        avatar={<Avatar src={'https://i.imgur.com/jgzXOi3.jpg'} />}
+        avatar={<Avatar src={Cat.src} />}
         title={
           <Link href="#" variant="subtitle2" color="text.primary" component={NextLink}>
-            Zennomi
+            Phong Huỳnh
           </Link>
         }
         subheader={
           <Typography variant="caption" sx={{ display: 'block', color: 'text.secondary' }}>
-            31/01/2022
+            10/02/2023
           </Typography>
-        }
-        action={
-          <IconButton>
-            <Iconify icon={'eva:more-vertical-fill'} width={20} height={20} />
-          </IconButton>
         }
       />
 
       <Stack spacing={3} sx={{ p: 3 }}>
-        <Typography>Mình không phiền nếu được nhận lì xì đâu ạ.</Typography>
-        <Typography color="info.main">Vietinbank: 105870480290 - Nguyen Dang Tuan Anh</Typography>
-        <Typography color="error.light">Momo: 0969142728 - Nguyen Dang Tuan Anh</Typography>
+        <Typography textAlign="justify">
+          Hi, my name is Phong and I'm the creator of the My Butler website. As someone who loves
+          exploring new technologies, I have skills in SCSS, React, Next.js, Material UI, MongoDB,
+          Node.js, and I am also familiar with data science libraries in Python. I created this
+          website for myself as a personal project, but I hope that it can also be useful for
+          others. My goal is to create a platform that can help automate everyday tasks and provide
+          a convenient and accessible way for people to manage their to-do lists, schedule, and
+          other aspects of their lives. Whether you're a busy professional, a student, or just
+          someone looking for a better way to organize your life, I believe My Butler can help make
+          your life easier and more efficient. I will try to keep adding new features and improving
+          the website as much as I can.
+        </Typography>
 
         <Image
           alt="post media"
