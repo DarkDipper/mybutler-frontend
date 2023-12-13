@@ -86,7 +86,7 @@ const navConfig = [
       },
       {
         title: 'Email',
-        path: PATH_DASHBOARD.general.file,
+        path: PATH_DASHBOARD.mail.all,
         icon: <Iconify icon="ri:mail-line" width={1} />,
       },
       {

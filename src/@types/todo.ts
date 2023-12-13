@@ -3,7 +3,7 @@ export type ITodo = {
   id: string;
   name: string;
   status: string;
-  createDate: Date | number;
-  dueDate: Date | number;
+  createDate: Date;
+  dueDate: Date;
   description: string;
 };

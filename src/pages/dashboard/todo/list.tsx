@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 // next
 import Head from 'next/head';
 import NextLink from 'next/link';
@@ -23,10 +23,12 @@ import {
 import { PATH_DASHBOARD } from '@yourapp/src/routes/paths';
 // utils
 import { fTimestamp } from '@yourapp/src/utils/formatTime';
+import axios from '@yourapp/src/utils/axios';
 // _mock_
 import { _todo } from '@yourapp/src/_mock/arrays';
 // @types
 import { ITodo } from '@yourapp/src/@types/todo';
+import { listToDoSchema } from '@yourapp/src/utils/validation';
 // layouts
 import DashboardLayout from '@yourapp/src/layouts/dashboard';
 // components
@@ -50,10 +52,10 @@ import { TodoAnalytic, TodoTableRow } from '@yourapp/src/sections/@dashboard/tod
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'todoTitle', label: 'Title', align: 'left' },
-  { id: 'createTodo', label: 'Create', align: 'left' },
-  { id: 'duetodo', label: 'Due', align: 'left' },
-  { id: 'statustodo', label: 'Status', align: 'left' },
+  { id: 'name', label: 'Title', align: 'left' },
+  { id: 'createDate', label: 'Create', align: 'left' },
+  { id: 'dueDate', label: 'Due', align: 'left' },
+  { id: 'status', label: 'Status', align: 'left' },
   { id: '' },
 ];
 
@@ -82,15 +84,26 @@ export default function TodoListPage() {
     onSelectRow,
     onSelectAllRows,
     //
+    onSort,
     onChangePage,
     onChangeRowsPerPage,
-  } = useTable();
+  } = useTable({ defaultOrderBy: 'createDate' });
 
-  const [tableData, setTableData] = useState(_todo);
+  const [tableData, setTableData] = useState<ITodo[]>(_todo);
 
   const [openConfirm, setOpenConfirm] = useState(false);
 
   const [filterStatus, setFilterStatus] = useState('all');
+
+  const toDoList = useCallback(async () => {
+    try {
+      const response = await axios.get('/api/todo/list', {});
+      const listData = listToDoSchema.validateSync(response.data);
+      // setTableData(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
 
   const dataFiltered = applyFilter({
     inputData: tableData,
@@ -200,7 +213,7 @@ export default function TodoListPage() {
           action={
             <Button
               component={NextLink}
-              href={PATH_DASHBOARD.invoice.new}
+              href={PATH_DASHBOARD.dailylife.todo.create}
               variant="contained"
               startIcon={<Iconify icon="eva:plus-fill" />}
             >
@@ -300,12 +313,12 @@ export default function TodoListPage() {
             <Scrollbar>
               <Table sx={{ minWidth: 800 }}>
                 <TableHeadCustom
-                  // order={order}
-                  // orderBy={orderBy}
+                  order={order}
+                  orderBy={orderBy}
                   headLabel={TABLE_HEAD}
                   rowCount={tableData.length}
                   numSelected={selected.length}
-                  // onSort={onSort}
+                  onSort={onSort}
                   onSelectAllRows={(checked) =>
                     onSelectAllRows(
                       checked,
@@ -351,7 +364,7 @@ export default function TodoListPage() {
         title="Delete"
         content={
           <>
-            Are you sure want to delete <strong> {selected.length} </strong> items?
+            Are you sure want to delete <strong> {selected.length} </strong> tasks?
           </>
         }
         action={

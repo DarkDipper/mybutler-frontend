@@ -74,7 +74,10 @@ export default function TableHeadCustom({
                 hideSortIcon
                 active={orderBy === headCell.id}
                 direction={orderBy === headCell.id ? order : 'asc'}
-                onClick={() => onSort(headCell.id)}
+                onClick={() => {
+                  console.log(headCell.id);
+                  onSort(headCell.id);
+                }}
                 sx={{ textTransform: 'capitalize' }}
               >
                 {headCell.label}

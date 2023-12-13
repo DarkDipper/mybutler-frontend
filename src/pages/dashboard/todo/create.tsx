@@ -31,7 +31,7 @@ export default function CreateNewTaskPage() {
 
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <CustomBreadcrumbs
-          heading="Create a new post"
+          heading="Create a new todo task"
           links={[
             {
               name: 'Dashboard',

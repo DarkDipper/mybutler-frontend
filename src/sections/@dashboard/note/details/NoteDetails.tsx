@@ -84,7 +84,7 @@ export default function KanbanDetails({
     onCloseDetails();
     task && reset();
   };
-
+  if (task) console.log(`Task:${task.name}`);
   return (
     <Drawer
       open={openDetails}
@@ -112,7 +112,7 @@ export default function KanbanDetails({
         <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
           <Stack spacing={3} sx={{ px: 2.5, pt: 3, pb: 5 }}>
             {/* Note name */}
-            <NoteInputName name="name" placeholder="Note name" value={task?.name || ''} />
+            <NoteInputName name="name" placeholder="Note name" />
 
             {/* Content */}
             <Stack direction="column" spacing={3}>

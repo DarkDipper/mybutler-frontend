@@ -36,7 +36,7 @@ export default function NewTaskForm({ isEdit, currentTask }: Props) {
 
   const { enqueueSnackbar } = useSnackbar();
 
-  const NewBlogSchema = Yup.object().shape({
+  const NewTaskSchema = Yup.object().shape({
     name: Yup.string().required('Title is required'),
     description: Yup.string().required('Description is required'),
     status: Yup.string().required('Status is required'),
@@ -53,7 +53,7 @@ export default function NewTaskForm({ isEdit, currentTask }: Props) {
   };
 
   const methods = useForm<FormValuesProps>({
-    resolver: yupResolver(NewBlogSchema),
+    resolver: yupResolver(NewTaskSchema),
     defaultValues,
   });
 

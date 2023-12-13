@@ -40,50 +40,30 @@ export default function GeneralAnalyticsPage() {
   return (
     <>
       <Head>
-        <title> General: Analytics | Minimal UI</title>
+        <title> General: Analytics | My Butler</title>
       </Head>
 
-      <Stack sx={{ alignItems: 'center' }}>
-        <Typography variant="h3" paragraph>
-          Website currently under maintenance
-        </Typography>
-
-        <Typography sx={{ color: 'text.secondary' }}>
-          We are currently working hard on this page!
-        </Typography>
-
-        <MaintenanceIllustration sx={{ my: 10, height: 440 }} />
-      </Stack>
-
-      {/* <Container maxWidth={themeStretch ? false : 'xl'}>
-        <Typography variant="h4" sx={{ mb: 5 }}>
-          Hi, Welcome back
-        </Typography>
-
+      <Container maxWidth={themeStretch ? false : 'xl'}>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>
-            <AnalyticsWidgetSummary
-              title="Weekly Sales"
-              total={714000}
-              icon="ant-design:android-filled"
-            />
+            <AnalyticsWidgetSummary title="Storage" total={714000} icon="ri:drive-fill" />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
             <AnalyticsWidgetSummary
-              title="New Users"
+              title="Books"
               total={1352831}
               color="info"
-              icon="ant-design:apple-filled"
+              icon="ic:sharp-menu-book"
             />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
             <AnalyticsWidgetSummary
-              title="Item Orders"
+              title="Resumes"
               total={1723315}
               color="warning"
-              icon="ant-design:windows-filled"
+              icon="mdi:resume"
             />
           </Grid>
 
@@ -98,41 +78,90 @@ export default function GeneralAnalyticsPage() {
 
           <Grid item xs={12} md={6} lg={8}>
             <AnalyticsWebsiteVisits
-              title="Website Visits"
-              subheader="(+43%) than last year"
+              title="Training Sessions"
+              // subheader="(+43%) than last year"
               chart={{
                 labels: [
-                  '01/01/2003',
-                  '02/01/2003',
-                  '03/01/2003',
-                  '04/01/2003',
-                  '05/01/2003',
-                  '06/01/2003',
-                  '07/01/2003',
-                  '08/01/2003',
-                  '09/01/2003',
-                  '10/01/2003',
-                  '11/01/2003',
+                  '1',
+                  '2',
+                  '3',
+                  '4',
+                  '5',
+                  '6',
+                  '7',
+                  '8',
+                  '9',
+                  '10',
+                  '11',
+                  '12',
+                  '13',
+                  '14',
+                  '15',
+                  '16',
+                  '17',
+                  '18',
+                  '19',
+                  '20',
+                  '21',
+                  '22',
+                  '23',
+                  '24',
+                  '25',
+                  '26',
+                  '27',
+                  '28',
+                  '29',
+                  '30',
+                  '31',
+                  '32',
+                  '33',
+                  '34',
+                  '35',
+                  '36',
+                  '37',
+                  '38',
+                  '39',
+                  '40',
+                  '41',
+                  '42',
+                  '43',
+                  '44',
+                  '45',
+                  '46',
+                  '47',
+                  '48',
+                  '49',
+                  '50',
                 ],
                 series: [
                   {
-                    name: 'Team A',
-                    type: 'column',
-                    fill: 'solid',
-                    data: [23, 11, 22, 27, 13, 22, 37, 21, 44, 22, 30],
-                  },
-                  {
-                    name: 'Team B',
-                    type: 'area',
-                    fill: 'gradient',
-                    data: [44, 55, 41, 67, 22, 43, 21, 41, 56, 27, 43],
-                  },
-                  {
-                    name: 'Team C',
+                    name: 'Train',
                     type: 'line',
                     fill: 'solid',
-                    data: [30, 25, 36, 30, 45, 35, 64, 52, 59, 36, 39],
+                    data: [
+                      0.2, 0.3, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.82, 0.85, 0.87,
+                      0.89, 0.9, 0.91, 0.92, 0.93, 0.94, 0.95, 0.96, 0.96, 0.97, 0.97, 0.98, 0.98,
+                      0.98, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99,
+                      0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99,
+                    ],
                   },
+                  {
+                    name: 'Valid',
+                    type: 'area',
+                    fill: 'gradient',
+                    data: [
+                      0.1, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.78,
+                      0.8, 0.82, 0.84, 0.85, 0.86, 0.87, 0.88, 0.89, 0.9, 0.9, 0.91, 0.92, 0.92,
+                      0.93, 0.94, 0.94, 0.95, 0.95, 0.95, 0.96, 0.96, 0.96, 0.96, 0.97, 0.97, 0.97,
+                      0.97, 0.98, 0.98, 0.98, 0.98, 0.98, 0.99, 0.99, 0.99, 0.99,
+                    ],
+                  },
+                  // {
+                  //   name: 'Team C',
+                  //   type: 'line',
+                  //   fill: 'solid',
+                  //   data: [30, 25, 36, 30, 45, 35, 64, 52, 59, 36, 39],
+                  // },
                 ],
               }}
             />
@@ -147,12 +176,14 @@ export default function GeneralAnalyticsPage() {
                   { label: 'Asia', value: 5435 },
                   { label: 'Europe', value: 1443 },
                   { label: 'Africa', value: 4443 },
+                  { label: 'UK', value: 4513 },
                 ],
                 colors: [
                   theme.palette.primary.main,
                   theme.palette.info.main,
                   theme.palette.error.main,
                   theme.palette.warning.main,
+                  theme.palette.success.main,
                 ],
               }}
             />
@@ -181,14 +212,15 @@ export default function GeneralAnalyticsPage() {
 
           <Grid item xs={12} md={6} lg={4}>
             <AnalyticsCurrentSubject
-              title="Current Subject"
+              title="Personal stats"
               chart={{
-                categories: ['English', 'History', 'Physics', 'Geography', 'Chinese', 'Math'],
+                categories: ['Programming', 'Otaku', 'Gaming', 'Sports', 'Music', 'Movies'],
                 series: [
                   { name: 'Series 1', data: [80, 50, 30, 40, 100, 20] },
-                  { name: 'Series 2', data: [20, 30, 40, 80, 20, 80] },
-                  { name: 'Series 3', data: [44, 76, 78, 13, 43, 10] },
+                  // { name: 'Series 2', data: [20, 30, 40, 80, 20, 80] },
+                  { name: 'Series 3', data: [44, 76, 78, 93, 43, 10] },
                 ],
+                colors: [theme.palette.warning.main, theme.palette.error.main],
               }}
             />
           </Grid>
@@ -218,7 +250,7 @@ export default function GeneralAnalyticsPage() {
             />
           </Grid>
         </Grid>
-      </Container> */}
+      </Container>
     </>
   );
 }

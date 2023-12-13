@@ -2,12 +2,13 @@
 
 Write a todo list feature for managment website.
 
-- [x] Todo list
+- [x] Todo list (Fix again)
   - [x] List
   - [x] Form
   - [x] Detail
 - [ ] Calendar
-- [ ] Notes
+- [x] Notes
+- [ ] Analytics
 - [ ] Weather
 - [ ] News about Information Technology
 - [ ] Health tracker

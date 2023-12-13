@@ -37,7 +37,11 @@ export default function AnalyticsWebsiteVisits({ title, subheader, chart, ...oth
     },
     labels,
     xaxis: {
-      type: 'datetime',
+      type: 'category',
+    },
+    yaxis: {
+      min: 0,
+      max: 1,
     },
     tooltip: {
       shared: true,
@@ -45,7 +49,7 @@ export default function AnalyticsWebsiteVisits({ title, subheader, chart, ...oth
       y: {
         formatter: (value: number) => {
           if (typeof value !== 'undefined') {
-            return `${value.toFixed(0)} visits`;
+            return `${value} loss`;
           }
           return value;
         },

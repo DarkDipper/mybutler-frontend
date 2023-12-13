@@ -6,7 +6,7 @@ import Iconify from '@yourapp/src/components/iconify';
 import MenuPopover from '@yourapp/src/components/menu-popover';
 import ConfirmDialog from '@yourapp/src/components/confirm-dialog';
 //
-import KanbanInputName from '../NoteInputName';
+import NoteCategoryName from './NoteCategoryName';
 
 // ----------------------------------------------------------------------
 
@@ -75,7 +75,7 @@ export default function NoteSectionColumnToolBar({ columnName, onDelete, onUpdat
         spacing={1}
         sx={{ pt: 3 }}
       >
-        <KanbanInputName
+        <NoteCategoryName
           inputRef={renameRef}
           placeholder="Section name"
           value={value}

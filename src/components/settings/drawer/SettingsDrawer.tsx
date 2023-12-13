@@ -109,9 +109,9 @@ export default function SettingsDrawer() {
             <ModeOptions />
           </Block>
 
-          <Block title="Contrast">
+          {/* <Block title="Contrast">
             <ContrastOptions />
-          </Block>
+          </Block> */}
 
           <Block title="Direction">
             <DirectionOptions />

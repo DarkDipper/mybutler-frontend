@@ -19,7 +19,7 @@ export default function TaskNewEditStatusDate() {
     <Stack
       spacing={2}
       direction={{ xs: 'column', sm: 'row' }}
-      sx={{ p: 3, bgcolor: 'background.neutral' }}
+      sx={{ p: 3, bgcolor: 'background.neutral', borderRadius: 1 }}
     >
       <RHFSelect fullWidth name="status" label="Status" InputLabelProps={{ shrink: true }}>
         {STATUS_OPTIONS.map((option) => (

@@ -12,12 +12,12 @@ type Props = {
 export default function ThemeSettings({ children }: Props) {
   return (
     <ThemeColorPresets>
-      <ThemeContrast>
-        <ThemeRtlLayout>
-          {children}
-          <SettingsDrawer />
-        </ThemeRtlLayout>
-      </ThemeContrast>
+      {/* <ThemeContrast> */}
+      <ThemeRtlLayout>
+        {children}
+        <SettingsDrawer />
+      </ThemeRtlLayout>
+      {/* </ThemeContrast> */}
     </ThemeColorPresets>
   );
 }

@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 //
-import { AuthContext } from '@yourapp/src/auth/FirebaseContext';
-// import { AuthContext } from './JwtContext';
+// import { AuthContext } from '@yourapp/src/auth/FirebaseContext';
+import { AuthContext } from './JwtContext';
 // import { AuthContext } from './Auth0Context';
 // import { AuthContext } from './AwsCognitoContext';
 
