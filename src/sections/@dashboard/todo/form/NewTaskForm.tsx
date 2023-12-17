@@ -98,7 +98,7 @@ export default function NewTaskForm({ isEdit, currentTask }: Props) {
       </Card>
       <Stack justifyContent="flex-end" direction="row" spacing={2} sx={{ mt: 3 }}>
         <LoadingButton type="submit" size="large" variant="contained" loading={isSubmitting}>
-          {isEdit ? 'Update' : 'Create'}
+          {isEdit ? 'Utpdate' : 'Create'}
         </LoadingButton>
       </Stack>
     </FormProvider>

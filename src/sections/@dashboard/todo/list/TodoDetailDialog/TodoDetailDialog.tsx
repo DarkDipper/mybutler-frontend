@@ -8,96 +8,120 @@ import {
   Grid,
   Box,
   Typography,
+  Select,
+  MenuItem,
+  Card,
+  Stack,
 } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
+import { useSnackbar } from 'notistack';
 // utils
 import { fDate } from '@yourapp/src/utils/formatTime';
 // components
 import Label from '@yourapp/src/components/label';
-//
+//form
+import * as Yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
 import { TodoDetailDialogProps } from './types';
+import FormProvider, { RHFTextField } from '@yourapp/src/components/hook-form';
+import TaskNewEditStatusDate from '../../form/NewTaskEditStatusDate';
+import { ITodo } from '@yourapp/src/@types/todo';
 
 // ----------------------------------------------------------------------
 
 export default function TodoDetailDialog({
   title,
   content,
-  action,
   open,
   onClose,
   task,
   ...other
 }: TodoDetailDialogProps) {
   return (
-    <Dialog fullWidth maxWidth="md" open={open} onClose={onClose} {...other}>
+    <Dialog fullWidth maxWidth="md" open={open} {...other}>
       <DialogTitle sx={{ pb: 2 }} variant="overline">
         {title}
       </DialogTitle>
       <DialogContent sx={{ typography: 'body2' }}>
-        <Grid container>
-          <Grid item xs={12} sm={6} sx={{ mb: 5 }}>
-            <Typography paragraph variant="h6">
-              {task.name}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6} sx={{ mb: 5 }}>
-            <Box sx={{ textAlign: { sm: 'right' } }}>
-              <Label
-                variant="soft"
-                color={
-                  (task.status === 'completed' && 'success') ||
-                  (task.status === 'progressing' && 'warning') ||
-                  (task.status === 'overdue' && 'error') ||
-                  'default'
-                }
-                sx={{ textTransform: 'uppercase', mb: 1 }}
-              >
-                {task.status}
-              </Label>
-            </Box>
-          </Grid>
-          <Grid item xs={12} sm={12} sx={{ mb: 5 }}>
-            <Typography paragraph variant="overline" sx={{ color: 'text.disabled' }}>
-              Description
-            </Typography>
-
-            <Typography variant="body2" textAlign={'justify'}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit iste cupiditate
-              voluptas enim neque ea, dolorum consequuntur ut nisi unde facere quidem dolore ab
-              nihil distinctio alias non commodi harum. Officia quia optio, saepe libero, accusamus
-              eius soluta cum labore consectetur suscipit aspernatur voluptatibus? Iure,
-              perspiciatis. Obcaecati pariatur ab delectus. Repudiandae nihil esse consectetur,
-              tempora officiis saepe enim rerum deleniti. Nobis vitae illo sunt omnis, non placeat
-              fugiat cupiditate. Quibusdam, voluptates accusantium. Possimus, perferendis
-              distinctio. Quis voluptas autem dicta cum illum beatae assumenda, debitis minima,
-              voluptate provident numquam possimus consequatur?
-            </Typography>
-          </Grid>
-
-          <Grid item xs={12} sm={6} sx={{ mb: 5 }}>
-            <Typography paragraph variant="overline" sx={{ color: 'text.disabled' }}>
-              Date create
-            </Typography>
-
-            <Typography variant="body2">{fDate(task.createDate)}</Typography>
-          </Grid>
-
-          <Grid item xs={12} sm={6} sx={{ mb: 5 }}>
-            <Typography paragraph variant="overline" sx={{ color: 'text.disabled' }}>
-              Due date
-            </Typography>
-
-            <Typography variant="body2">{fDate(task.dueDate)}</Typography>
-          </Grid>
-        </Grid>
+        <ViewUpdateTaskForm handleClose={onClose} task={task} />
       </DialogContent>
-
-      <DialogActions>
-        {action}
-
-        <Button variant="outlined" color="inherit" onClick={onClose}>
-          Mark as {task.status === 'completed' ? 'progressing' : 'completed'}
-        </Button>
-      </DialogActions>
     </Dialog>
+  );
+}
+// ----------------------------------------------------------------------
+
+type FormValuesProps = {
+  name: string;
+  description: string;
+  status: string;
+  createDate: Date | null;
+  dueDate: Date | null;
+};
+
+type viewUpdateTaskFormProps = {
+  handleClose: VoidFunction;
+  task: ITodo;
+};
+
+function ViewUpdateTaskForm({ handleClose, task }: viewUpdateTaskFormProps) {
+  const { enqueueSnackbar } = useSnackbar();
+
+  const NewTaskSchema = Yup.object().shape({
+    name: Yup.string().required('Title is required'),
+    description: Yup.string().required('Description is required'),
+    status: Yup.string().required('Status is required'),
+    createDate: Yup.date().required('Create date is required'),
+    dueDate: Yup.date().required('Due date is required'),
+  });
+
+  const defaultValues = {
+    name: task.name,
+    description: task.description,
+    createDate: task.createDate,
+    dueDate: task.dueDate,
+    status: task.status,
+  };
+
+  const methods = useForm<FormValuesProps>({
+    resolver: yupResolver(NewTaskSchema),
+    defaultValues,
+  });
+
+  const {
+    handleSubmit,
+    formState: { isSubmitting },
+  } = methods;
+
+  const onSubmit = async (data: FormValuesProps) => {
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      enqueueSnackbar('Update task success!');
+      console.log('DATA', data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  return (
+    <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+      <Card sx={{ p: 3 }}>
+        <Stack spacing={3}>
+          <RHFTextField name="name" label="Task Name" />
+
+          <TaskNewEditStatusDate />
+
+          <RHFTextField name="description" label="Description" multiline rows={10} />
+        </Stack>
+      </Card>
+      <Stack justifyContent="flex-end" direction="row" spacing={2} sx={{ my: 3 }}>
+        <Button onClick={handleClose} color="inherit" variant="outlined">
+          {'Cancel'}
+        </Button>
+        <LoadingButton type="submit" size="large" variant="contained" loading={isSubmitting}>
+          {'Update'}
+        </LoadingButton>
+      </Stack>
+    </FormProvider>
   );
 }

@@ -4,6 +4,7 @@ import Label from '@yourapp/src/components/label';
 import SvgColor from '@yourapp/src/components/svg-color';
 // routes
 import { PATH_DASHBOARD, PATH_PAGE } from '@yourapp/src/routes/paths';
+import path from 'path';
 
 // ----------------------------------------------------------------------
 
@@ -113,6 +114,16 @@ const navConfig = [
         title: 'project',
         path: PATH_DASHBOARD.permissionDenied,
         icon: <Iconify icon="ri:projector-line" width={1} />,
+      },
+    ],
+  },
+  {
+    subheader: 'Development',
+    items: [
+      {
+        title: 'Components',
+        path: PATH_PAGE.components,
+        icon: <Iconify icon="uiw:component" width={1} />,
       },
     ],
   },

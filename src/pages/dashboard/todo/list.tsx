@@ -48,6 +48,7 @@ import {
 } from '@yourapp/src/components/table';
 // sections
 import { TodoAnalytic, TodoTableRow } from '@yourapp/src/sections/@dashboard/todo/list';
+import NewTaskDialogs from '@yourapp/src/sections/@dashboard/todo/form';
 
 // ----------------------------------------------------------------------
 
@@ -85,6 +86,7 @@ export default function TodoListPage() {
     onSelectAllRows,
     //
     onSort,
+    //
     onChangePage,
     onChangeRowsPerPage,
   } = useTable({ defaultOrderBy: 'createDate' });
@@ -211,14 +213,12 @@ export default function TodoListPage() {
             },
           ]}
           action={
-            <Button
-              component={NextLink}
-              href={PATH_DASHBOARD.dailylife.todo.create}
-              variant="contained"
+            <NewTaskDialogs
+              title="New Task"
               startIcon={<Iconify icon="eva:plus-fill" />}
-            >
-              New Task
-            </Button>
+              colorBtn="info"
+              variant="contained"
+            />
           }
         />
 

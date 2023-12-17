@@ -134,10 +134,10 @@ export default function TodoTableRow({
           }}
         >
           <Iconify icon="eva:eye-fill" />
-          View
+          View/Edit
         </MenuItem>
 
-        <MenuItem
+        {/* <MenuItem
           onClick={() => {
             onEditRow();
             handleClosePopover();
@@ -145,7 +145,7 @@ export default function TodoTableRow({
         >
           <Iconify icon="eva:edit-fill" />
           Edit
-        </MenuItem>
+        </MenuItem> */}
 
         <Divider sx={{ borderStyle: 'dashed' }} />
 
@@ -167,11 +167,6 @@ export default function TodoTableRow({
         onClose={handleCloseDetail}
         title="Detail"
         content={row.description}
-        action={
-          <Button variant="contained" color="error" onClick={handleCloseDetail}>
-            Cancle
-          </Button>
-        }
       />
 
       <ConfirmDialog

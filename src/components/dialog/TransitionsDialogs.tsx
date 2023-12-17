@@ -22,7 +22,14 @@ const Transition = forwardRef(
   ) => <Slide direction="up" ref={ref} {...props} />
 );
 
-export default function TransitionsDialogs() {
+// ----------------------------------------------------------------------
+
+export default function TransitionsDialogs({
+  title = 'Transitions Dialogs',
+  startIcon = null,
+  colorBtn = 'success',
+  variant = 'outlined',
+}: Props) {
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -35,8 +42,8 @@ export default function TransitionsDialogs() {
 
   return (
     <div>
-      <Button variant="outlined" color="success" onClick={handleClickOpen}>
-        Transitions Dialogs
+      <Button startIcon={startIcon} variant={variant} color={colorBtn} onClick={handleClickOpen}>
+        {title}
       </Button>
 
       <Dialog
@@ -69,3 +76,13 @@ export default function TransitionsDialogs() {
     </div>
   );
 }
+
+// ----------------------------------------------------------------------
+
+type Props = {
+  title?: string;
+  // children: React.ReactNode;
+  variant?: 'text' | 'outlined' | 'contained';
+  colorBtn?: 'inherit' | 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'error';
+  startIcon?: React.ReactNode;
+};
