@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import * as Yup from 'yup';
 // form
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -17,6 +17,7 @@ import KanbanDetailsToolbar from './NoteDetailsToolbar';
 import { RHFEditor } from '@yourapp/src/components/hook-form';
 import { useSnackbar } from '@yourapp/src/components/snackbar';
 import FormProvider from '@yourapp/src/components/hook-form/FormProvider';
+import { NoteDetailsAttachments } from '..';
 
 // ----------------------------------------------------------------------
 
@@ -29,8 +30,10 @@ const StyledLabel = styled('span')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 export type FormValuesProps = {
+  section: string;
   name: string;
   content: string;
+  listFile: File[];
 };
 
 type Props = {
@@ -49,30 +52,41 @@ export default function KanbanDetails({
   columnName,
 }: Props) {
   const { enqueueSnackbar } = useSnackbar();
+  const [listFile, setListFile] = useState<File[]>([]);
 
-  const NewBlogSchema = Yup.object().shape({
+  const NewNoteSchema = Yup.object().shape({
     name: Yup.string().required('Title is required'),
     content: Yup.string().required('Content is required'),
+    listFile: Yup.array().test('fileType', 'only accept image', (value) => {
+      if (!value) return true;
+      return value.every((file: File) => {
+        const supportedFormats = ['image/jpeg', 'image/png', 'image/gif'];
+        return value.every((file) => supportedFormats.includes(file.type));
+      });
+    }),
   });
 
   const defaultValues = {
     name: task?.name || '',
     content: task?.description || '',
+    listFile: [],
   };
-
   const methods = useForm<FormValuesProps>({
-    resolver: yupResolver(NewBlogSchema),
+    resolver: yupResolver(NewNoteSchema),
     defaultValues,
   });
 
   const {
     reset,
     handleSubmit,
-    formState: { isSubmitting },
+    formState: { isSubmitting, errors },
+    setValue,
   } = methods;
 
   const onSubmit = async (data: FormValuesProps) => {
     try {
+      data.section = columnName;
+      // data.listFile = listFile;
       await new Promise((resolve) => setTimeout(resolve, 500));
       enqueueSnackbar('Create note success!');
       console.log('DATA', data);
@@ -84,7 +98,6 @@ export default function KanbanDetails({
     onCloseDetails();
     task && reset();
   };
-  if (task) console.log(`Task:${task.name}`);
   return (
     <Drawer
       open={openDetails}
@@ -119,13 +132,31 @@ export default function KanbanDetails({
               <StyledLabel> Content </StyledLabel>
               <RHFEditor name="content" />
             </Stack>
-
-            <LoadingButton type="submit" size="large" variant="contained" loading={isSubmitting}>
-              Save
-            </LoadingButton>
+            <Stack direction="column" spacing={3}>
+              <StyledLabel> Attachment </StyledLabel>
+              <NoteDetailsAttachments
+                listFile={listFile}
+                setListFile={setListFile}
+                updateFileForm={setValue}
+              />
+            </Stack>
           </Stack>
         </FormProvider>
       </Scrollbar>
+      <Divider />
+      <Stack spacing={3} sx={{ px: 2.5, py: 3 }}>
+        <LoadingButton
+          type="submit"
+          size="large"
+          variant="contained"
+          loading={isSubmitting}
+          onClick={() => {
+            handleSubmit(onSubmit)();
+          }}
+        >
+          Save
+        </LoadingButton>
+      </Stack>
     </Drawer>
   );
 }

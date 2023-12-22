@@ -66,6 +66,9 @@ export const PATH_DASHBOARD = {
     budget: path(ROOTS_DASHBOARD, '/budget'),
     health: path(ROOTS_DASHBOARD, '/health'),
   },
+  library: {
+    root: path(ROOTS_DASHBOARD, '/title'),
+  },
   mail: {
     root: path(ROOTS_DASHBOARD, '/mail'),
     all: path(ROOTS_DASHBOARD, '/mail/all'),

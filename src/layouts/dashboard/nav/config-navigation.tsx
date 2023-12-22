@@ -86,6 +86,11 @@ const navConfig = [
         icon: <Iconify icon="ant-design:file-filled" width={1} />,
       },
       {
+        title: 'Library',
+        path: PATH_DASHBOARD.library.root,
+        icon: <Iconify icon="mdi:bookshelf" width={1} />,
+      },
+      {
         title: 'Email',
         path: PATH_DASHBOARD.mail.all,
         icon: <Iconify icon="ri:mail-line" width={1} />,

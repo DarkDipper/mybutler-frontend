@@ -1,17 +1,21 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, Dispatch, SetStateAction } from 'react';
 // @mui
 import { Stack } from '@mui/material';
 // components
 import { MultiFilePreview, UploadBox } from '../../../../components/upload';
+import { UseFormSetValue } from 'react-hook-form';
+import { FormValuesProps } from './NoteDetails';
 
 // ----------------------------------------------------------------------
 
 type Props = {
-  attachments: string[];
+  listFile: File[];
+  setListFile: Dispatch<SetStateAction<File[]>>;
+  updateFileForm: UseFormSetValue<FormValuesProps>;
 };
 
-export default function KanbanDetailsAttachments({ attachments }: Props) {
-  const [files, setFiles] = useState<(File | string)[]>(attachments);
+export default function NoteDetailsAttachments({ listFile, setListFile, updateFileForm }: Props) {
+  // const [files, setFiles] = useState<(File | string)[]>(attachments);
 
   const handleDrop = useCallback(
     (acceptedFiles: File[]) => {
@@ -20,22 +24,23 @@ export default function KanbanDetailsAttachments({ attachments }: Props) {
           preview: URL.createObjectURL(file),
         })
       );
-
-      setFiles([...files, ...newFiles]);
+      updateFileForm('listFile', [...listFile, ...newFiles]);
+      setListFile([...listFile, ...newFiles]);
     },
-    [files]
+    [listFile]
   );
 
   const handleRemoveFile = (inputFile: File | string) => {
-    const filtered = files.filter((file) => file !== inputFile);
-    setFiles(filtered);
+    console.log(inputFile);
+    const filtered = listFile.filter((file) => file !== inputFile);
+    setListFile(filtered);
   };
 
   return (
     <Stack direction="row" flexWrap="wrap">
       <MultiFilePreview
         thumbnail
-        files={files}
+        files={listFile}
         onRemove={(file) => handleRemoveFile(file)}
         sx={{ width: 64, height: 64 }}
       />
