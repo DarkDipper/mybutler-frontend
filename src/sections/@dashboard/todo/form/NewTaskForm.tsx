@@ -48,7 +48,7 @@ export default function NewTaskForm({ isEdit, currentTask }: Props) {
     name: currentTask?.name || '',
     description: currentTask?.description || '',
     createDate: currentTask?.createDate || new Date(),
-    dueDate: currentTask?.dueDate || null,
+    dueDate: currentTask?.dueDate || new Date(),
     status: currentTask?.status || 'progressing',
   };
 

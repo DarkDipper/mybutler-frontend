@@ -10,6 +10,7 @@ import {
   Autocomplete,
   Chip,
   Grid,
+  MenuItem,
 } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // components
@@ -20,15 +21,15 @@ import FormProvider, {
   RHFSelect,
   RHFTextField,
   RHFSwitch,
+  RHFAutocomplete,
 } from '@yourapp/src/components/hook-form';
 // utils
-import * as Yup from 'yup';
 import axios from '@yourapp/src/utils/axios';
 import { Book } from '@yourapp/src/@types/library';
-import { ScrollResponder } from '@fullcalendar/common';
-import { description } from '@yourapp/src/_mock/assets';
-import { url } from 'inspector';
+
 import { GENRE_OPTION, STATUS_OPTION, TAG_OPTION, TYPE_OPTION } from '@yourapp/src/constant';
+// schema
+import { BookUpdateFormSchema } from '@yourapp/src/utils/validation/library/BookUpdateFormSchema';
 
 // Props
 type FormValuesProps = {
@@ -36,44 +37,24 @@ type FormValuesProps = {
   onClose: VoidFunction;
   setBook: React.Dispatch<React.SetStateAction<Book | undefined>>;
 };
-// schema
-const BookSchema = Yup.object().shape({
-  title: Yup.string().required('Title is required'),
-  score: Yup.number().required('Score is required'),
-  description: Yup.string().required('Description is required'),
-  genres: Yup.array().required('Genres is required'),
-  tags: Yup.array().required('Tags is required'),
-  coverArt: Yup.string().required('Cover art is required'),
-  type: Yup.string().required('Type is required'),
-  status: Yup.string().required('Status is required'),
-  isLisensed: Yup.boolean().required('Is lisened is required'),
-  author: Yup.string().required('Author is required'),
-  artist: Yup.string(),
-  url: Yup.object().shape({
-    raw: Yup.array(),
-    vi: Yup.array(),
-    en: Yup.array(),
-  }),
-});
 
 export default function BookUpdateForm({ book, onClose, setBook }: FormValuesProps) {
   const { enqueueSnackbar } = useSnackbar();
 
   const defaultValues: Book = useMemo(() => {
     return {
-      id: book?.id || '',
       title: book?.title || '',
       score: book?.score || 0,
       description: book?.description || '',
       genres: book?.genres || [],
       tags: book?.tags || [],
-      coverArt: book?.coverArt || '',
+      coverArt: book?.coverArt || [],
       type: book?.type || '',
       isLisensed: book?.isLisensed || false,
       author: book?.author || '',
       artist: book?.artist || '',
       status: book?.status || '',
-      url: {
+      urls: {
         raw: book?.urls?.raw || [],
         vi: book?.urls?.vi || [],
         en: book?.urls?.en || [],
@@ -83,12 +64,12 @@ export default function BookUpdateForm({ book, onClose, setBook }: FormValuesPro
 
   const methods = useForm<Book>({
     defaultValues,
-    resolver: yupResolver(BookSchema),
+    resolver: yupResolver(BookUpdateFormSchema),
   });
   const {
     handleSubmit,
     control,
-    formState: { isSubmitting },
+    formState: { isSubmitting, errors },
     reset,
     getValues,
     setValue,
@@ -99,7 +80,10 @@ export default function BookUpdateForm({ book, onClose, setBook }: FormValuesPro
       await new Promise((resolve) => setTimeout(resolve, 500));
       console.log(data);
       // setBook(response.data);
-      enqueueSnackbar('Book updated', { variant: 'success' });
+      enqueueSnackbar('Book updated', {
+        variant: 'success',
+        anchorOrigin: { horizontal: 'left', vertical: 'top' },
+      });
       onClose();
     } catch (error) {
       enqueueSnackbar('Error updating book', { variant: 'error' });
@@ -107,72 +91,65 @@ export default function BookUpdateForm({ book, onClose, setBook }: FormValuesPro
   };
   useEffect(() => {
     reset(defaultValues);
-  });
+  }, [book]);
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Stack spacing={2}>
         <Typography variant="h5">{book?.title}</Typography>
         <Grid container spacing={1}>
           <Grid item xs={6}>
-            <RHFSelect name="type" label="Type">
+            <RHFSelect name="type" label="Type" InputLabelProps={{ shrink: true }}>
               {TYPE_OPTION.map((status: string) => (
-                <option>{status}</option>
+                <MenuItem key={status} value={status}>
+                  {status}
+                </MenuItem>
               ))}
             </RHFSelect>
           </Grid>
           <Grid item xs={6}>
             <RHFSelect name="status" label="Status">
               {STATUS_OPTION.map((status: string) => (
-                <option>{status}</option>
+                <MenuItem key={status} value={status}>
+                  {status}
+                </MenuItem>
               ))}
             </RHFSelect>
           </Grid>
         </Grid>
-        <Controller
+        <RHFAutocomplete
           name="genres"
-          control={control}
-          render={({ field }) => (
-            <Autocomplete
-              {...field}
-              multiple
-              freeSolo
-              onChange={(event, newValue) => field.onChange(newValue)}
-              options={GENRE_OPTION.map((option: string) => option)}
-              renderTags={(value, getTagProps) =>
-                value.map((option, index) => (
-                  <Chip {...getTagProps({ index })} key={option} size="small" label={option} />
-                ))
-              }
-              renderInput={(params) => <TextField label="Genres" {...params} />}
-            />
-          )}
+          label="Genres"
+          options={GENRE_OPTION.map((option: string) => option)}
+          value={getValues('genres') || []}
+          multiple
+          freeSolo
+          renderTags={(value, getTagProps) =>
+            value.map((option, index) => (
+              <Chip {...getTagProps({ index })} key={option} size="small" label={option} />
+            ))
+          }
         />
-        <Controller
+        <RHFAutocomplete
           name="tags"
-          control={control}
-          render={({ field }) => (
-            <Autocomplete
-              {...field}
-              multiple
-              freeSolo
-              options={TAG_OPTION}
-              onChange={(event, newValue) => field.onChange(newValue)}
-              renderTags={(value, getTagProps) =>
-                value.map((option, index) => (
-                  <Chip {...getTagProps({ index })} key={option} size="small" label={option} />
-                ))
-              }
-              renderInput={(params) => <TextField label="Tags" {...params} />}
-            />
-          )}
+          label="Tags"
+          options={TAG_OPTION}
+          value={getValues('tags') || []}
+          multiple
+          freeSolo
+          renderTags={(value, getTagProps) =>
+            value.map((option, index) => (
+              <Chip {...getTagProps({ index })} key={option} size="small" label={option} />
+            ))
+          }
         />
         <Controller
           name="urls.vi"
           control={control}
-          render={({ field }) => (
+          render={({ field, fieldState: { error } }) => (
             <Autocomplete
               {...field}
               multiple
+              value={field.value || []}
               freeSolo
               options={[]}
               onChange={(event, newValue) => field.onChange(newValue)}
@@ -181,24 +158,24 @@ export default function BookUpdateForm({ book, onClose, setBook }: FormValuesPro
                   <Chip {...getTagProps({ index })} key={option} size="small" label={option} />
                 ))
               }
-              renderInput={(params) => <TextField label="Link việt" {...params} />}
+              renderInput={(params) => (
+                <TextField
+                  label="Link việt"
+                  error={!!error}
+                  {...params}
+                  helperText={Array.isArray(error) && error.length ? error[0]?.message : undefined}
+                />
+              )}
             />
           )}
         />
-        <Button
-          component={'a'}
-          href={book?.links?.find((l) => l.site === 'GOOGLE-SENSEI')?.link}
-          target="_blank"
-          variant="contained"
-        >
-          Tra Google
-        </Button>
         <Controller
           name="urls.en"
           control={control}
-          render={({ field }) => (
+          render={({ field, fieldState: { error } }) => (
             <Autocomplete
               {...field}
+              value={field.value || []}
               multiple
               freeSolo
               options={[]}
@@ -208,7 +185,14 @@ export default function BookUpdateForm({ book, onClose, setBook }: FormValuesPro
                   <Chip {...getTagProps({ index })} key={option} size="small" label={option} />
                 ))
               }
-              renderInput={(params) => <TextField label="Link eng" {...params} />}
+              renderInput={(params) => (
+                <TextField
+                  label="Link eng"
+                  error={!!error}
+                  {...params}
+                  helperText={Array.isArray(error) && error.length ? error[0]?.message : undefined}
+                />
+              )}
             />
           )}
         />
@@ -216,13 +200,19 @@ export default function BookUpdateForm({ book, onClose, setBook }: FormValuesPro
           name="score"
           label="Điểm số"
           placeholder="0.00"
-          value={getValues('score') === 0 ? '' : getValues('score')}
-          onChange={(event) => setValue('score', Number(event.target.value))}
+          onChange={(event) => {
+            setValue('score', Number(event.target.value));
+            console.log(getValues('score'));
+          }}
           InputLabelProps={{ shrink: true }}
           InputProps={{
             endAdornment: <InputAdornment position="end">/100</InputAdornment>,
             type: 'number',
+            inputProps: {
+              pattern: '[0-9]*',
+            },
           }}
+          helperText={errors.score?.message}
         />
         <div>
           <RHFSwitch name="isLisensed" label="Có bản quyền" />
@@ -239,6 +229,7 @@ export default function BookUpdateForm({ book, onClose, setBook }: FormValuesPro
           Sửa chi tiết
         </Button>
       </Stack>
+      {/* {errors && <pre>{JSON.stringify(errors, null, 2)}</pre>} */}
     </FormProvider>
   );
 }

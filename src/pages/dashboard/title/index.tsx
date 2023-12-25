@@ -92,13 +92,13 @@ export default function BookPage() {
         </ToggleButtonGroup>
         <Grid container spacing={3}>
           {books.length === 0
-            ? Array(24).fill(
-                <Grid item xs={4} md={2}>
+            ? Array.from({ length: 24 }).map((_, idx) => (
+                <Grid item xs={4} md={2} key={idx}>
                   <BookCardSkeleton />
                 </Grid>
-              )
-            : books.map((book) => (
-                <Grid item xs={4} md={2} key={book.id}>
+              ))
+            : books.map((book, idx) => (
+                <Grid item xs={4} md={2} key={idx}>
                   <div style={{ position: 'relative' }}>
                     <BookCard book={book} />
                     {user?.role === 'admin' && (

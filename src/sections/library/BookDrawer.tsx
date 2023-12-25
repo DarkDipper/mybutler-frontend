@@ -23,19 +23,19 @@ export default function BookDrawer({ book, onClose, setBook }: BookDrawerProps) 
       open={Boolean(book)}
       onClose={onClose}
       anchor="right"
-      PaperProps={{ sx: { width: { xs: 1, sm: 480 }, py: 5 } }}
+      PaperProps={{ sx: { width: { xs: 1, sm: 480 }, py: isDesktop ? 5 : 1 } }}
     >
       <Container>
         {!isDesktop && (
           <>
             <Tooltip title="Back">
-              <IconButtonAnimate onClick={onClose} sx={{ mr: 1 }}>
+              <IconButtonAnimate onClick={onClose} sx={{ mr: 1, mb: 1 }}>
                 <Iconify icon={'eva:arrow-ios-back-fill'} width={20} height={20} />
               </IconButtonAnimate>
             </Tooltip>
           </>
         )}
-        <Alert color="error">
+        <Alert color="info" severity="info" sx={{ mb: 2 }}>
           Thông tin ở đây có thể chưa được cập nhật sau lần cập nhật trước, reload lại nếu cần
         </Alert>
         <BookUpdateForm book={book} onClose={onClose} setBook={setBook} />

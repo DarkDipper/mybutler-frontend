@@ -39,7 +39,7 @@ export default function TodoDetailDialog({
   ...other
 }: TodoDetailDialogProps) {
   return (
-    <Dialog fullWidth maxWidth="md" open={open} {...other}>
+    <Dialog fullWidth maxWidth="md" open={open} onClose={onClose} {...other}>
       <DialogTitle sx={{ pb: 2 }} variant="overline">
         {title}
       </DialogTitle>

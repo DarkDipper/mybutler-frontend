@@ -32,10 +32,10 @@ export default function BookCard({ book }: { book: Book }) {
     <StyledTooltip title={<BookTooltip book={book} />} placement="right-start">
       <Card>
         <CardActionArea LinkComponent={Link} href="#">
-          <Image src={resizeImage(book.coverArt, 300)} ratio="4/6" />
+          <Image src={resizeImage(book.coverArt[0], 300)} ratio="4/6" />
           <OverlayStyle />
           <CaptionStyle>
-            <TextMaxLine line={2}>
+            <TextMaxLine line={2} component="div">
               <Typography width="100%" variant="subtitle1" component="span">
                 {book.title}
               </Typography>
@@ -110,24 +110,26 @@ const StyledTooltip = styled(({ className, ...props }: TooltipProps) => (
 
 const BookTooltip = ({ book }: { book: Book }) => (
   <>
-    <Rating readOnly max={5} value={(book.score / 100) * 5} />
-    <Typography variant="body2" sx={{ mb: 2 }}>
-      <TextMaxLine line={5}>
+    <Rating readOnly max={5} value={(book.score || 0 / 100) * 5} />
+    <Typography variant="body2" sx={{ mb: 2 }} component={'div'}>
+      <TextMaxLine line={5} component={'div'}>
         <CustomStyle>{parse(book.description || '')}</CustomStyle>
       </TextMaxLine>
     </Typography>
-    <TextMaxLine line={3}>
+    <TextMaxLine line={3} component="div">
       <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
-        {book?.genres.map((genre: string) => (
-          <Label key={genre} color="primary" sx={{ m: 0.2 }}>
-            {genre}
-          </Label>
-        ))}
-        {book?.tags.map((tag: string) => (
-          <Label key={tag} color="primary" variant="outlined" sx={{ m: 0.2 }}>
-            {tag}
-          </Label>
-        ))}
+        {book?.genres &&
+          book.genres.map((genre: string) => (
+            <Label key={genre} color="primary" sx={{ m: 0.2 }}>
+              {genre}
+            </Label>
+          ))}
+        {book?.tags &&
+          book.tags.map((tag: string) => (
+            <Label key={tag} color="primary" variant="outlined" sx={{ m: 0.2 }}>
+              {tag}
+            </Label>
+          ))}
       </Box>
     </TextMaxLine>
   </>
