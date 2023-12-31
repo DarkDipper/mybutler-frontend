@@ -6,15 +6,12 @@ import { PATH_DASHBOARD } from '@yourapp/src/routes/paths';
 
 // ----------------------------------------------------------------------
 
-export default function Index() {
+export default function LibPage() {
   const { pathname, push } = useRouter();
 
   useEffect(() => {
-    if (pathname === PATH_DASHBOARD.dailylife.todo.root) {
-      push(PATH_DASHBOARD.dailylife.todo.list);
+    if (pathname === PATH_DASHBOARD.library.root) {
+      push(PATH_DASHBOARD.library.list);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
-
-  return null;
 }

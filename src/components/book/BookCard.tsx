@@ -32,7 +32,7 @@ export default function BookCard({ book }: { book: Book }) {
     <StyledTooltip title={<BookTooltip book={book} />} placement="right-start">
       <Card>
         <CardActionArea LinkComponent={Link} href="#">
-          <Image src={resizeImage(book.coverArt[0], 300)} ratio="4/6" />
+          <Image src={resizeImage(book.coverArt[0] as string, 300)} ratio="4/6" />
           <OverlayStyle />
           <CaptionStyle>
             <TextMaxLine line={2} component="div">

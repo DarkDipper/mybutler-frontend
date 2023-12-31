@@ -1,6 +1,6 @@
 export { default as TAG_OPTION } from './tags';
 
-export const TYPE_OPTION = ['novel', 'manga', 'anime', 'movie'];
+export const TYPE_OPTION = ['light novel', 'manga', 'book'];
 
 export const STATUS_OPTION = ['ongoing', 'completed', 'cancelled'];
 

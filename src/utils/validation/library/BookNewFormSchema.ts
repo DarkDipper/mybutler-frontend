@@ -2,9 +2,9 @@ import * as Yup from 'yup';
 import { Book } from '@yourapp/src/@types/library';
 import { STATUS_OPTION } from '@yourapp/src/constant';
 
-export const BookUpdateFormSchema: Yup.SchemaOf<Book> = Yup.object().shape({
+export const BookNewFormSchema: Yup.SchemaOf<Book> = Yup.object().shape({
   id: Yup.string(),
-  title: Yup.string(),
+  title: Yup.string().required('Title is required'),
   titles: Yup.array().default([]),
   originalLanguage: Yup.string(),
   score: Yup.number()

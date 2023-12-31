@@ -23,6 +23,11 @@ export const COGNITO_API = {
   clientId: process.env.AWS_COGNITO_CLIENT_ID,
 };
 
+export const IMGUR_API = {
+  clientId: process.env.IMGUR_CLIENT_ID,
+  clientSecret: process.env.IMGUR_CLIENT_SECRET,
+};
+
 export const AUTH0_API = {
   clientId: process.env.AUTH0_CLIENT_ID,
   domain: process.env.AUTH0_DOMAIN,

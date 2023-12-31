@@ -36,11 +36,11 @@ import { mockBook } from '@yourapp/src/_mock/book';
 
 // ----------------------------------------------------------------------
 
-BookPage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>;
+LibExplorePage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>;
 
 // ----------------------------------------------------------------------
 
-export default function BookPage() {
+export default function LibExplorePage() {
   const { enqueueSnackbar } = useSnackbar();
   const { user } = useAuthContext();
   const [book, setBook] = useState<Book | undefined>();
@@ -136,7 +136,4 @@ export default function BookPage() {
       </Container>
     </>
   );
-}
-function useAuth(): { user: any } {
-  throw new Error('Function not implemented.');
 }

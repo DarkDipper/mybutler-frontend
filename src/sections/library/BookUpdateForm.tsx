@@ -51,8 +51,8 @@ export default function BookUpdateForm({ book, onClose, setBook }: FormValuesPro
       coverArt: book?.coverArt || [],
       type: book?.type || '',
       isLisensed: book?.isLisensed || false,
-      author: book?.author || '',
-      artist: book?.artist || '',
+      author: book?.author || [],
+      artist: book?.artist || [],
       status: book?.status || '',
       urls: {
         raw: book?.urls?.raw || [],

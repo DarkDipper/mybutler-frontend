@@ -142,7 +142,6 @@ export default function ReactHookForm({ debug }: Props) {
       const newFile = Object.assign(file, {
         preview: URL.createObjectURL(file),
       });
-
       if (newFile) {
         setValue('singleUpload', newFile, { shouldValidate: true });
       }

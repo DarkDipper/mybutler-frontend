@@ -67,7 +67,12 @@ export const PATH_DASHBOARD = {
     health: path(ROOTS_DASHBOARD, '/health'),
   },
   library: {
-    root: path(ROOTS_DASHBOARD, '/title'),
+    root: path(ROOTS_DASHBOARD, '/lib'),
+    list: path(ROOTS_DASHBOARD, '/lib/explore'),
+    new: path(ROOTS_DASHBOARD, '/lib/new'),
+    // edit: path(ROOTS_DASHBOARD, '/lib/edit'),
+    view: (id: string) => path(ROOTS_DASHBOARD, `/lib/${id}`),
+    edit: (id: string) => path(ROOTS_DASHBOARD, `/lib/edit/${id}`),
   },
   mail: {
     root: path(ROOTS_DASHBOARD, '/mail'),

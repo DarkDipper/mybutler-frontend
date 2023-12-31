@@ -4,13 +4,13 @@ import { BreadcrumbsProps } from '@mui/material';
 // ----------------------------------------------------------------------
 
 export type BreadcrumbsLinkProps = {
-  name?: string;
+  name?: string | React.ReactElement<any>;
   href?: string;
   icon?: React.ReactElement;
 };
 
 export interface CustomBreadcrumbsProps extends BreadcrumbsProps {
-  heading?: string;
+  heading?: string | React.ReactElement<any>;
   moreLink?: string[];
   activeLast?: boolean;
   action?: React.ReactNode;

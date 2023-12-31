@@ -23,7 +23,7 @@ export default function HealthPage() {
 
       <Stack sx={{ alignItems: 'center' }}>
         <Typography variant="h3" paragraph>
-          Website currently under maintenance
+          The feature is currently under maintenance
         </Typography>
 
         <Typography sx={{ color: 'text.secondary' }}>

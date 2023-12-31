@@ -87,8 +87,14 @@ const navConfig = [
       },
       {
         title: 'Library',
-        path: PATH_DASHBOARD.library.root,
+        path: PATH_DASHBOARD.dailylife.todo.root,
         icon: <Iconify icon="mdi:bookshelf" width={1} />,
+        children: [
+          { title: 'explore', path: PATH_DASHBOARD.library.list },
+          { title: 'create', path: PATH_DASHBOARD.library.new },
+          { title: 'edit', path: PATH_DASHBOARD.library.edit('123') },
+          { title: 'detail', path: PATH_DASHBOARD.library.view('123') },
+        ],
       },
       {
         title: 'Email',
