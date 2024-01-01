@@ -38,6 +38,7 @@ import CustomStyle from '@yourapp/src/components/book/CustomStyle';
 import { CarouselDots, CarouselArrows } from '@yourapp/src/components/carousel';
 import { Settings } from 'react-slick';
 import ReadButtons from '@yourapp/src/sections/library/ReadButtons';
+import BookTable from '@yourapp/src/sections/library/BookTable';
 // layouts
 import DashboardLayout from '@yourapp/src/layouts/dashboard';
 // assets
@@ -219,8 +220,11 @@ export default function DetailPage() {
             </Box>
             <Divider sx={{ my: 2 }} />
           </Grid>
-          <Grid item xs={12}>
+          {/* <Grid item xs={12}>
             <ReadButtons urls={book?.urls} />
+          </Grid> */}
+          <Grid item xs={12}>
+            <BookTable urls={book?.urls} />
           </Grid>
           <Grid item xs={12}>
             <Alert severity="info">
@@ -230,20 +234,31 @@ export default function DetailPage() {
           </Grid>
         </Grid>
         {user?.role === 'admin' && (
-          <Card>
-            <CardHeader title="Admin" />
+          <Card sx={{ my: 2 }}>
             <CardContent>
-              <Button size="small" component={NextLink} href={PATH_DASHBOARD.library.edit('123')}>
-                Cập nhật
-              </Button>
-              <Button
-                color="error"
-                size="small"
-                component={NextLink}
-                href={PATH_DASHBOARD.library.edit('123')}
-              >
-                Xoá
-              </Button>
+              <Grid container xs={12}>
+                <Grid item xs={10}>
+                  <Typography variant="h5">Admin</Typography>
+                </Grid>
+                <Grid item xs={2} display="flex" justifyContent="flex-end" gap={2}>
+                  <Button
+                    variant="contained"
+                    color="info"
+                    component={NextLink}
+                    href={PATH_DASHBOARD.library.edit('123')}
+                  >
+                    Cập nhật
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="error"
+                    component={NextLink}
+                    href={PATH_DASHBOARD.library.edit('123')}
+                  >
+                    Xoá
+                  </Button>
+                </Grid>
+              </Grid>
             </CardContent>
           </Card>
         )}
