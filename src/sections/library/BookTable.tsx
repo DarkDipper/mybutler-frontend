@@ -50,7 +50,6 @@ export default function BookTable({
       });
     }
   }
-  console.log(readLinks);
   return (
     <Card>
       <TableContainer sx={{ overflow: 'unset' }}>

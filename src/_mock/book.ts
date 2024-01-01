@@ -24,11 +24,6 @@ export const mockBook: Book = {
   urls: {
     raw: ['https://mangadex.org/title/c52b2ce3-7f95-469c-96b0-479524fb7a1a/jujutsu-kaisen'],
     vi: ['https://mangadex.org/title/c52b2ce3-7f95-469c-96b0-479524fb7a1a/jujutsu-kaisen'],
-    en: [
-      'https://drive.google.com/file/d/1YY2_LjyTSjfm-TV60qJACz-fIYY2Rnwe/',
-      'https://drive.google.com/file/d/1YY2_LjyTSjfm-TV60qJACz-fIYY2Rnwe/',
-      'https://drive.google.com/file/d/1YY2_LjyTSjfm-TV60qJACz-fIYY2Rnwe/',
-      'https://drive.google.com/file/d/1YY2_LjyTSjfm-TV60qJACz-fIYY2Rnwe/',
-    ],
+    en: ['https://drive.google.com/file/d/1YY2_LjyTSjfm-TV60qJACz-fIYY2Rnwe/'],
   },
 };

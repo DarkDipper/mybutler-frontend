@@ -47,6 +47,7 @@ import { MaintenanceIllustration } from '@yourapp/src/assets/illustrations';
 import { Book } from '@yourapp/src/@types/library';
 import { mockBook } from '@yourapp/src/_mock/book';
 import { PATH_DASHBOARD } from '@yourapp/src/routes/paths';
+import DeleteBookDialog from '@yourapp/src/sections/library/DeleteBookDialog';
 
 // ----------------------------------------------------------------------
 
@@ -60,6 +61,7 @@ export default function DetailPage() {
   const isMountedRef = useIsMountedRef();
   const { enqueueSnackbar } = useSnackbar();
   const { id } = useRouter().query;
+  const [openDeleteBookDialog, setOpenDeleteBookDialog] = useState(false);
   const { user, isAuthenticated } = useAuthContext();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -85,6 +87,10 @@ export default function DetailPage() {
       bottom: 5,
       position: 'absolute',
     }),
+  };
+
+  const closeDeleteBookDialog = () => {
+    setOpenDeleteBookDialog(false);
   };
 
   const getBook = useCallback(async () => {
@@ -236,7 +242,7 @@ export default function DetailPage() {
         {user?.role === 'admin' && (
           <Card sx={{ my: 2 }}>
             <CardContent>
-              <Grid container xs={12}>
+              <Grid container>
                 <Grid item xs={10}>
                   <Typography variant="h5">Admin</Typography>
                 </Grid>
@@ -252,8 +258,9 @@ export default function DetailPage() {
                   <Button
                     variant="contained"
                     color="error"
-                    component={NextLink}
-                    href={PATH_DASHBOARD.library.edit('123')}
+                    // component={NextLink}
+                    // href={PATH_DASHBOARD.library.edit('123')}
+                    onClick={() => setOpenDeleteBookDialog(true)}
                   >
                     Xoá
                   </Button>
@@ -262,6 +269,12 @@ export default function DetailPage() {
             </CardContent>
           </Card>
         )}
+        <DeleteBookDialog
+          title={book?.title as string}
+          onClose={closeDeleteBookDialog}
+          open={openDeleteBookDialog}
+          idBook={book?.id as string}
+        />
       </Container>
     </>
   );
