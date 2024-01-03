@@ -122,7 +122,6 @@ export default function BookUpdateForm({ book, onClose, setBook }: FormValuesPro
           options={GENRE_OPTION.map((option: string) => option)}
           value={getValues('genres') || []}
           multiple
-          freeSolo
           renderTags={(value, getTagProps) =>
             value.map((option, index) => (
               <Chip {...getTagProps({ index })} key={option} size="small" label={option} />
@@ -135,7 +134,6 @@ export default function BookUpdateForm({ book, onClose, setBook }: FormValuesPro
           options={TAG_OPTION}
           value={getValues('tags') || []}
           multiple
-          freeSolo
           renderTags={(value, getTagProps) =>
             value.map((option, index) => (
               <Chip {...getTagProps({ index })} key={option} size="small" label={option} />

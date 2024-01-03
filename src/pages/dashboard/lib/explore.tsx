@@ -1,6 +1,7 @@
 // next
 import Head from 'next/head';
 import NextLink from 'next/link';
+import { useRouter } from 'next/router';
 // hooks
 import { useEffect, useRef, useState } from 'react';
 import { useSnackbar } from 'notistack';
@@ -11,6 +12,7 @@ import {
   Typography,
   Stack,
   Grid,
+  Chip,
   Pagination,
   Alert,
   ToggleButtonGroup,
@@ -33,6 +35,7 @@ import { TYPE_OPTION } from '@yourapp/src/constant';
 import { Book } from '@yourapp/src/@types/library';
 //mock
 import { mockBook } from '@yourapp/src/_mock/book';
+import FilterDrawer from '@yourapp/src/sections/library/FilterDrawer';
 
 // ----------------------------------------------------------------------
 
@@ -41,17 +44,32 @@ LibExplorePage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}
 // ----------------------------------------------------------------------
 
 export default function LibExplorePage() {
+  const { push, query } = useRouter();
   const { enqueueSnackbar } = useSnackbar();
   const { user } = useAuthContext();
   const [book, setBook] = useState<Book | undefined>();
   const [books, setBooks] = useState<Book[]>([]);
   const [total, setTotal] = useState(1);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+
   // const [searchParams, setSearchParams] = useSearchParams({ page: 1, sortBy: 'score:desc' });
   const toggleButtonRef = useRef(null);
 
   const handleClose = () => {
     setBook(undefined);
+  };
+  const setFilterParams = (newParams: any) => {
+    Object.keys(newParams).forEach((key) => {
+      if (newParams[key] === undefined || newParams[key] === null || newParams[key] === '') {
+        delete newParams[key];
+      } else {
+        query[key] = newParams[key];
+      }
+    });
+    push({ query });
+  };
+  const filterClose = () => {
+    setIsFilterOpen(false);
   };
 
   useEffect(() => {
@@ -90,6 +108,20 @@ export default function LibExplorePage() {
             </ToggleButton>
           ))}
         </ToggleButtonGroup>
+        <Box sx={{ display: 'flex', justifyContent: 'right' }}>
+          <Button
+            startIcon={<Iconify icon="bi:filter" />}
+            endIcon={<Chip label={Object.keys(query).length} size="small" color="info" />}
+            color="info"
+            variant="outlined"
+            onClick={() => {
+              setIsFilterOpen(true);
+            }}
+            sx={{ mb: 2, mr: 2 }}
+          >
+            Lọc
+          </Button>
+        </Box>
         <Grid container spacing={3}>
           {books.length === 0
             ? Array.from({ length: 24 }).map((_, idx) => (
@@ -133,6 +165,7 @@ export default function LibExplorePage() {
         {user?.role === 'admin' && (
           <BookDrawer book={book} onClose={handleClose} setBook={setBook} />
         )}
+        <FilterDrawer isOpen={isFilterOpen} onClose={filterClose} setNewParams={setFilterParams} />
       </Container>
     </>
   );
